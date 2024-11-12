@@ -13,6 +13,10 @@ const movieSchema = new mongoose.Schema({
     goofs: [String], 
     soundtrack: [String], 
     ageRating: String, 
+    country: String,
+    language: String,
+    keywords: [String],
+    popularity: { type: Number, default: 0 },
 }, {
     timestamps: true,
 });

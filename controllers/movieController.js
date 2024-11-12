@@ -81,14 +81,48 @@ const getMovieDetails = async (req, res) => {
 // Get all movies with optional filtering
 const getMovies = async (req, res) => {
     try {
-        const { genre, director, cast } = req.query;
+        const { genre, director, cast, rating, popularity, year, decade, country, language, keywords, topByGenre } = req.query;
         let query = {};
-
+        
+        // Basic Search Filter
         if (genre) query.genre = genre;
-        if (director) query.director = director;
+        if (director) query.director = { $regex: director, $options: 'i' };
         if (cast) query.cast = { $in: [cast] };
+        
+        // Rating Filter
+        if (rating) query.averageRating = { $gte: rating };
 
-        const movies = await Movie.find(query);
+        // Popularity Filter
+        if (popularity) query.popularity = { $gte: popularity };
+
+        // Year Filter
+        if (year) query.releaseDate = { $gte: new Date(`${year}-01-01`), $lt: new Date(`${year}-12-31`) };
+
+        // Decade Filter
+        if (decade) {
+            const startYear = (Math.floor(decade / 10) * 10);
+            const endYear = startYear + 9;
+            query.releaseDate = { $gte: new Date(`${startYear}-01-01`), $lt: new Date(`${endYear}-12-31`) };
+        }
+
+        // Filter by Country, Language, Keywords
+        if (country) query.country = country;
+        if (language) query.language = language;
+        if (keywords) query.keywords = { $in: [keywords] };
+
+        // Top 10 Movies of each genre
+        if (topByGenre) {
+            console.log(topByGenre);
+            const topMovies = await Movie.aggregate([
+                { $match: { genre: { $regex: topByGenre, $options: "i" } } },
+                { $sort: { averageRating: -1 } },  
+                { $limit: 10 }
+            ]);
+            return res.status(200).json(topMovies);
+        }
+
+        // Filter movies by release date
+        const movies = await Movie.find(query).sort({ releaseDate: -1 });
         res.status(200).json(movies);
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving movies', error });
