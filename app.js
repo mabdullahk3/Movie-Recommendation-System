@@ -7,7 +7,7 @@ const customListRoutes = require('./routes/customListRoutes');
 const upcomingMovieRoutes = require('./routes/upcomingMovieRoutes');
 const reminderRoutes = require('./routes/reminderRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
-
+const newsArticleRoutes = require('./routes/newsArticleRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -24,6 +24,7 @@ app.use('/api/custom-lists', customListRoutes);
 app.use('/api/upcomingMovies', upcomingMovieRoutes);
 app.use('/api', reminderRoutes);
 app.use('/api', notificationRoutes);
+app.use('/api/news-articles', newsArticleRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
