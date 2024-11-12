@@ -124,6 +124,26 @@ const createAdmin = async (req, res) => {
     }
 };
 
+const setUserPreferences = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id); 
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.preferences = req.body.preferences || user.preferences;
+
+        const updatedUser = await user.save();
+        res.json({
+            message: 'Preferences updated successfully',
+            preferences: updatedUser.preferences
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error updating preferences' });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
@@ -131,5 +151,6 @@ module.exports = {
     updateUserProfile,
     addToWishlist,
     removeFromWishlist,
-    createAdmin
+    createAdmin,
+    setUserPreferences
 };

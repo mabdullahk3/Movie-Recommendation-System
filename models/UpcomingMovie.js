@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const upcomingMovieSchema = new mongoose.Schema({
     title: { type: String, required: true },  
     releaseDate: { type: Date, required: true },
-    actors: [String], 
+    director : [String], 
     cast: [String],  
-    summary: { type: String },  
+    summary: { type: String }, 
+    genre: [String],
+    countryOfOrigin: { type: String },
 }, {
     timestamps: true,  
 });
