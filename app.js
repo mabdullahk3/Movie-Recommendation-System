@@ -10,6 +10,10 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const newsArticleRoutes = require('./routes/newsArticleRoutes');
 const boxOfficeRoutes = require('./routes/boxOfficeRoutes');  
 const awardRoutes = require('./routes/awardRoutes'); 
+const discussionBoardRoutes = require('./routes/discussionBoardRoutes');
+const topicRoutes = require('./routes/topicRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+
 require('dotenv').config();
 
 const app = express();
@@ -29,6 +33,9 @@ app.use('/api', notificationRoutes);
 app.use('/api/news-articles', newsArticleRoutes);
 app.use('/api/box-office', boxOfficeRoutes);    
 app.use('/api/awards', awardRoutes); 
+app.use('/api/discussion-boards', discussionBoardRoutes);
+app.use('/api/topics', topicRoutes);
+app.use('/api/comments', commentRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
