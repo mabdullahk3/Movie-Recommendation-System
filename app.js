@@ -8,6 +8,8 @@ const upcomingMovieRoutes = require('./routes/upcomingMovieRoutes');
 const reminderRoutes = require('./routes/reminderRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const newsArticleRoutes = require('./routes/newsArticleRoutes');
+const boxOfficeRoutes = require('./routes/boxOfficeRoutes');  
+const awardRoutes = require('./routes/awardRoutes'); 
 require('dotenv').config();
 
 const app = express();
@@ -25,6 +27,8 @@ app.use('/api/upcomingMovies', upcomingMovieRoutes);
 app.use('/api', reminderRoutes);
 app.use('/api', notificationRoutes);
 app.use('/api/news-articles', newsArticleRoutes);
+app.use('/api/box-office', boxOfficeRoutes);    
+app.use('/api/awards', awardRoutes); 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
