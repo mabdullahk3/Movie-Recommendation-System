@@ -6,9 +6,6 @@ const Notification = require('../models/notificationModel');
 // Function to set reminder
 const setReminder = async (req, res) => {
     const { userId, movieId, reminderDate } = req.body;
-    console.log(movieId);
-    console.log(userId);
-    console.log(reminderDate);
     try {
         const movie = await Movie.findById(movieId);
         
